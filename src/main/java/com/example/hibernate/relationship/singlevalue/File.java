@@ -37,7 +37,7 @@ import com.example.hibernate.BaseEntity;
  *  Drawback
  *  1. Since parent will be poiting latest child entity, if we soft delete chile entity and reassign new one, we can not have history of this,  child entity row
  *  	do not have information about it's parent and parent is pointing to latest. So old soft deleted entities remains unassigned.
- */
+ */	
 @Entity
 @Table(name = "image")
 public class File extends BaseEntity {
