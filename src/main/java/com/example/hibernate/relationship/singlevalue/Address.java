@@ -40,7 +40,9 @@ import com.example.hibernate.BaseEntity;;
  *  7. Since foreign key column is in child, we need to define one-to-one mapping to parent in child table. And since we seldom
  *  	select child entity, and most often we select parent entity, we need child entity while fetching parent, so we must define
  *  	one-to-one mapping in parent entity because relationship will be used most often from parent to chile and not child to parent.
- *    
+ *  
+ *  Solution/Best way ->
+ *  	Is to map joinColumn(forign key) in parent table and not child table, all above problems will get solved.  
  */ 
 
 @Entity

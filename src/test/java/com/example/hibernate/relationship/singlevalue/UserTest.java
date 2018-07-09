@@ -10,14 +10,13 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.example.hibernate.BaseTest;
-import com.example.hibernate.relationship.singlevalue.User;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserTest extends BaseTest {
 
 	private static UUID userId = null;
 	
-	//@Test
+	@Test
 	public void aCreateUserWithoutAddressTest() {
 		User user = new User("amipatil");
 		em.persist(user);
@@ -26,7 +25,7 @@ public class UserTest extends BaseTest {
 		userId = user.getUserId();
 	}
 	
-	@Test
+	//@Test
 	public void abCreateUserWithAddressTest() {
 		User user = new User("iamitpatil1993");
 		Address address = new Address();
@@ -40,7 +39,7 @@ public class UserTest extends BaseTest {
 		assertTrue(em.contains(address));
 	}
 	
-	@Test
+	//@Test
 	public void bCreateAddressTest() {
 		Address address = new Address();
 		address.setCity("Pune");
@@ -51,10 +50,37 @@ public class UserTest extends BaseTest {
 		assertTrue(em.contains(address));
 	}
 	
-	//@Test 
+	@Test 
 	public void cFindUser() {
 		User user = em.find(User.class, userId);
 		assertNotNull(user);
-		assertTrue(em.contains(user.getUserId()));
+		assertTrue(em.contains(user));
+	}
+	
+	@Test
+	public void dCreateFileForUser() {
+		File file = new File("asdf", "Image", "jpeg", "/images", null);
+		em.persist(file);
+		assertNotNull(file.getImageId());
+		assertTrue(em.contains(file));
+		
+		User user = em.find(User.class, userId);
+		assertNotNull(user);
+		assertTrue(em.contains(user));
+		user.setProfilePicture(file);
+		em.merge(user);
+	}
+	
+	@Test
+	public void eFindUserWithFileTest() {
+		// This find operation will not execute separate query for fetch file entity in one-to-one relationship also, it will not 
+		// execute join in main parent query to fetch file because we have marked relationship to be LAZY.
+		// Best thing about this mapping is LAZT loading workes using proxy for single value associations as well.
+		User user = em.find(User.class, userId);
+	
+		// this statement will lazily load the file entity for user entity by executing separete query.
+		File file = user.getProfilePicture();
+		assertNotNull(file);
+		assertTrue(em.contains(file));
 	}
 }

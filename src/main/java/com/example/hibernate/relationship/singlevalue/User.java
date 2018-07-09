@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,6 +36,19 @@ public class User extends BaseEntity {
 
 	@OneToOne(mappedBy = "user", cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	private Address address;
+	
+	// we are marking this join column to be unique
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "profile_picture_file_id", unique = true)
+	private File profilePicture;
+
+	public File getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(File profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 
 	public Address getAddress() {
 		return address;
