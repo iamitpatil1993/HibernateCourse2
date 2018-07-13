@@ -1,4 +1,4 @@
-package com.example.hibernate.relationship.manytomany.withoutextracolumn;
+package com.example.hibernate.relationship.manytomany.withextracolumn.compositekey;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -18,26 +18,31 @@ import org.hibernate.annotations.GenericGenerator;
 import com.example.hibernate.BaseEntity;
 
 @Entity
-@Table(name = "patient_1")
+@Table(name = "patient_2")
 public class Patient extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6420163456783389279L;
+	private static final long serialVersionUID = -1227520301710041177L;
 
 	@Basic
 	@Id
-	@GeneratedValue(generator = "patient_id_gen")
-	@GenericGenerator(name = "patient_id_gen", strategy = "uuid2")
+	@GeneratedValue(generator = "patient_id_gen_1")
+	@GenericGenerator(name = "patient_id_gen_1", strategy = "uuid2")
 	@Column(name = "patient_id")
 	private UUID patientId;
 
 	@Column(name = "name")
 	private String name;
+	
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+	private Set<PatientAllergy> patientAllergies = new HashSet<>();
+	
+	public Set<PatientAllergy> getPatientAllergies() {
+		return patientAllergies;
+	}
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "patients")
-	Set<Allergy> allergies = new HashSet<>();
+	public void setPatientAllergies(Set<PatientAllergy> patientAllergies) {
+		this.patientAllergies = patientAllergies;
+	}
 
 	public UUID getPatientId() {
 		return patientId;
@@ -80,21 +85,4 @@ public class Patient extends BaseEntity {
 		}
 		return patientId.equals(other.patientId);
 	}
-
-	public void addAllergy(Allergy allergy) {
-		if (allergy != null) {
-			allergy.getPatients().add(this);
-			allergies.add(allergy);
-		}
-	}
-
-	public Set<Allergy> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(Set<Allergy> allergies) {
-		this.allergies = allergies;
-	}
-	
-	
 }
