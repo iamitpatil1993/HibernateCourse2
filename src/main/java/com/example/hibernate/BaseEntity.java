@@ -57,4 +57,5 @@ public abstract class BaseEntity implements Serializable {
 		this.isDeleted = isDeleted;
 	}
 
+	
 }
