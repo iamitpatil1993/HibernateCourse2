@@ -34,7 +34,7 @@ public class EntityManagerGetReferenceTest extends BaseTest {
 		assertTrue(em.contains(user));
 		userId = user.getUserId();
 	}
-
+	
 	/*
 	 * EntityManager#contains() return true for proxy entity reference.
 	 */
