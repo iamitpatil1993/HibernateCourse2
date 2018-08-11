@@ -38,6 +38,10 @@
 
 			<!-- Assiigns null value to entity identifier after entity deletion to make it purely transient -->
 			<property name="hibernate.use_identifier_rollback" value = "true"/>
+
+			<!-- This proprty says hibernate to throw exception if Immutable entity is being update by Query execution.
+			if this is not set warning will be printed on log but no update query will be executed on database -->
+			<property  name="hibernate.query.immutable_entity_update_query_handling_mode"  value="exception" />
 			
 			<!-- Schema update configuration -->
 			<property name="hibernate.hbm2ddl.auto" value="validate" />
