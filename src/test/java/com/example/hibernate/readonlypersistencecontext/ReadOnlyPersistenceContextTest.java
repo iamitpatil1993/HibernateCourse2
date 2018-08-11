@@ -39,6 +39,15 @@ import com.example.hibernate.relationship.singlevalue.selfreferencing.Employee;
  * To use it we need to uwrap the entity manager to get underlying hibernate session object and call setDetaultReadOnly(true) to make current persistence context read-only
  * To make specific entity read-only, unwrap the em to uderlying hibernate session object and call setReadOnly(entityObject, true).
  * To make Query result read-only, we need to set query hint before exeuting query (hint = org.hibernate.annotations.QueryHints.READ_ONLY)
+ * 
+ * NOTE:
+ * Below operations are allowed
+ * 1. Read
+ * 2. Insert
+ * 3. Delete
+ * 
+ * Operations not allowed or Ignored
+ * 1. Update
  *
  */
 public class ReadOnlyPersistenceContextTest extends BaseTest {
