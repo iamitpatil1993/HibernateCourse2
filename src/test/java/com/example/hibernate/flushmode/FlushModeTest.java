@@ -1,5 +1,10 @@
 package com.example.hibernate.flushmode;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.UUID;
+
 import javax.persistence.FlushModeType;
 
 import org.junit.Test;
@@ -21,7 +26,7 @@ import com.example.hibernate.relationship.singlevalue.selfreferencing.Employee;
  */
 public class FlushModeTest extends BaseTest {
 
-	//@Test
+	@Test
 	public void testCommitFlushModeTypeAtEntityManger() {
 		em.setFlushMode(FlushModeType.COMMIT);
 		Employee emp = new Employee("Amit Patil");
@@ -35,7 +40,7 @@ public class FlushModeTest extends BaseTest {
 		.getSingleResult();
 	}
 
-	//@Test
+	@Test
 	public void testAutoFlushModeTypeAtEntityManger() {
 		HelloWorld world = new HelloWorld();
 		em.persist(world);
@@ -70,3 +75,4 @@ public class FlushModeTest extends BaseTest {
 		.getSingleResult();
 	}
 }
+
